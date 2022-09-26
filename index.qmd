@@ -27,7 +27,7 @@ leaflet() %>%
     setView(lat = 40.628,
             lng = -75.341,
             zoom = 14) %>% 
-    addTiles("https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png") %>% 
+    addTiles("https://tile.jawg.io/jawg-terrain/{z}/{x}/{y}{r}.png?access-token=bka2W5SwTAqWUfIAw12i6iTLOqNOi5nY7EPkdAgUlFOXyxuzOJI7TIQRQ3rYBnCa") %>% 
     addCircleMarkers(lng=-75.341,
                     lat=40.628,
                     stroke=TRUE,
