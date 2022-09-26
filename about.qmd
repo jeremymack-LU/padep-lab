@@ -2,8 +2,4 @@
 title: "About"
 ---
 
-About this site
-
-```{r}
-1 + 1
-```
+The following site contains script that summarizes the relationship between wind speed and PM2.5. Data were collected by PA DEP at their Freemansburg site and [can be accessed here](https://www.ahs.dep.pa.gov/aq_apps/aadata/Reports/MonthlyParamDetail.aspx).

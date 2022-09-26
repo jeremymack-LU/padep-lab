@@ -6,8 +6,15 @@ project:
   type: website
   output-dir: docs
 ---
+<style>
+  pre {
+    background-color: lightyellow;
+    white-space: pre-wrap;
+    line-height: 100%;
+  }
+</style>
 
-#### Script summary:
+#### **Script summary:**
 
 The following script summarizes the relationship between wind speed and PM2.5. Data were collected by PA DEP at their Freemansburg site.
 
@@ -97,7 +104,7 @@ dep.data <- dep.data %>%
   #filter(avg_pm25 <= 50 & avg_pm25 > 0)
 ```
 
-#### Visualize the data:
+#### **Visualize the data:**
 
 ```{r}
 #| eval: true
@@ -115,7 +122,7 @@ dep.data %>%
   ggplot(aes(Tavg_wind,Tavg_pm25)) + geom_point()
 ```
 
-#### Linear model fit:
+#### **Linear model fit:**
 
 ```{r}
 #| eval: true
@@ -142,7 +149,7 @@ dep.data %>%
        y='Avg. PM 2.5 (log-transformed)')
 ```
 
-#### Segmented model fit:
+#### **Segmented model fit:**
 
 ```{r}
 #| eval: true

@@ -180,8 +180,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
+<style>
+  pre {
+    background-color: lightyellow;
+    white-space: pre-wrap;
+    line-height: 100%;
+  }
+</style>
 <section id="script-summary" class="level4">
-<h4 class="anchored" data-anchor-id="script-summary">Script summary:</h4>
+<h4 class="anchored" data-anchor-id="script-summary"><strong>Script summary:</strong></h4>
 <p>The following script summarizes the relationship between wind speed and PM2.5. Data were collected by PA DEP at their Freemansburg site.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install and load required packages</span></span>
@@ -243,7 +250,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </section>
 <section id="visualize-the-data" class="level4">
-<h4 class="anchored" data-anchor-id="visualize-the-data">Visualize the data:</h4>
+<h4 class="anchored" data-anchor-id="visualize-the-data"><strong>Visualize the data:</strong></h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot relationship between wind and PM2.5</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>dep.data <span class="sc">%&gt;%</span></span>
@@ -265,7 +272,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </section>
 <section id="linear-model-fit" class="level4">
-<h4 class="anchored" data-anchor-id="linear-model-fit">Linear model fit:</h4>
+<h4 class="anchored" data-anchor-id="linear-model-fit"><strong>Linear model fit:</strong></h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a linear model to the data</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>lm.fit   <span class="ot">&lt;-</span> <span class="fu">lm</span>(Tavg_pm25<span class="sc">~</span>Tavg_wind,<span class="at">data=</span>dep.data)</span>
@@ -294,7 +301,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </section>
 <section id="segmented-model-fit" class="level4">
-<h4 class="anchored" data-anchor-id="segmented-model-fit">Segmented model fit:</h4>
+<h4 class="anchored" data-anchor-id="segmented-model-fit"><strong>Segmented model fit:</strong></h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Break point analysis</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>seg.fit  <span class="ot">&lt;-</span> <span class="fu">segmented</span>(lm.fit)</span>
