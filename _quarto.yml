@@ -4,11 +4,13 @@ project:
 
 website:
   title: "PA DEP Lab"
-  navbar:
-    left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - section: "Script"
+        contents: 
+          - index.qmd
 
 format:
   html:
