@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "PA DEP Lab - PM2.5 vs. Wind Speed"
+  title: "PA DEP Lab"
   navbar:
     left:
       - href: index.qmd

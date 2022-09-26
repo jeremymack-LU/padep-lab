@@ -1,5 +1,5 @@
 ---
-title: "PM2.5 vs. Wind"
+title: "PA DEP Lab - PM2.5 vs. Wind Speed"
 format: html
 editor: visual
 project:
