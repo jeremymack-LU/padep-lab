@@ -1,8 +1,9 @@
 project:
   type: website
+  output-dir: docs
 
 website:
-  title: "padep-lab"
+  title: "PA DEP Lab - PM2.5 vs. Wind Speed"
   navbar:
     left:
       - href: index.qmd
