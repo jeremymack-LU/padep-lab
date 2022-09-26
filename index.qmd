@@ -1,11 +1,170 @@
 ---
-title: "padep-lab"
+title: "PM2.5 vs. Wind"
+format: html
+editor: visual
+project:
+  type: website
+  output-dir: docs
 ---
 
-This is a Quarto website.
+#### Script summary:
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+The following script summarizes the relationship between wind speed and PM2.5. Data were collected by PA DEP at their Freemansburg site.
 
 ```{r}
-1 + 1
+#| include: false
+#| message: false
+# Install and load required packages
+pacman::p_load(segmented,tidyverse)
+
+# Download wind and PM2.5 data
+url1 <- 'https://www.dropbox.com/s/djsrnlou8gfd9h6/pa_dep_wind.csv?dl=1'
+url2 <- 'https://www.dropbox.com/s/f60llaltcclen47/pa_dep_pm25.csv?dl=1'
+
+wind <- read_csv(url1)
+pm25 <- read_csv(url2)
+```
+
+```{r}
+#| eval: false
+#| warning: false
+# Install and load required packages
+install.packages('pacman')
+pacman::p_load(segmented,tidyverse)
+
+# Download wind and PM2.5 data
+url1 <- 'https://www.dropbox.com/s/djsrnlou8gfd9h6/pa_dep_wind.csv?dl=1'
+url2 <- 'https://www.dropbox.com/s/f60llaltcclen47/pa_dep_pm25.csv?dl=1'
+
+wind <- read_csv(url1)
+pm25 <- read_csv(url2)
+```
+
+```{r}
+#| eval: false
+#| warning: false
+# Check the structure of the wind dataset
+str(wind)
+
+# View the wind dataset in a spreadsheet view
+View(wind)
+
+# Quick summary of the wind dataset
+summary(wind)
+```
+
+```{r}
+#| eval: true
+#| warning: false
+# Subset data and create a date variable
+wind.avg <- wind %>%
+  select(Day,Avg,Month) %>%
+  mutate(Year=str_sub(Month,-4),
+         Month=str_sub(Month,1,nchar(Month)-5),
+         Date=as.Date(paste(Year,Month,Day,sep='-'))) %>%
+  arrange(Date) %>%
+  rename(avg_wind=Avg) %>%
+  select(Date,avg_wind)
+
+pm25.avg <- pm25 %>%
+  select(Day,Avg,Month) %>%
+  mutate(Year=str_sub(Month,-4),
+         Month=str_sub(Month,1,nchar(Month)-5),
+         Date=as.Date(paste(Year,Month,Day,sep='-'))) %>%
+  arrange(Date) %>%
+  rename(avg_pm25=Avg) %>% 
+  select(Date,avg_pm25)
+
+# Join wind and PM2.5 datasets together
+dep.data <- pm25.avg %>%
+  left_join(wind.avg, by='Date')
+
+summary(dep.data)
+```
+
+```{r}
+#| include: false
+#| warning: false
+# Inspect data for outliers
+boxplot(dep.data$avg_pm25)
+boxplot(dep.data$avg_wind)
+
+# Remove extreme outliers
+dep.data <- dep.data %>% 
+  drop_na() %>% 
+  filter(avg_wind < 30) %>%
+  filter(between(avg_pm25, 0, 50))
+  #filter(avg_pm25 <= 50 & avg_pm25 > 0)
+```
+
+#### Visualize the data:
+
+```{r}
+#| eval: true
+# Plot relationship between wind and PM2.5
+dep.data %>%
+  ggplot(aes(avg_wind,avg_pm25)) + geom_point()
+
+# Transform data
+dep.data <- dep.data %>%
+  mutate(Tavg_pm25=log(avg_pm25),
+         Tavg_wind=log(avg_wind+0.01))
+
+# Plot relationship between wind and PM2.5 after transforming data
+dep.data %>%
+  ggplot(aes(Tavg_wind,Tavg_pm25)) + geom_point()
+```
+
+#### Linear model fit:
+
+```{r}
+#| eval: true
+# Fit a linear model to the data
+lm.fit   <- lm(Tavg_pm25~Tavg_wind,data=dep.data)
+
+# Extract fitted values from segment analysis
+lm.fit.df   <- fitted(lm.fit)
+
+# Create dataset with wind and fitted PM2.5 data
+lm.model.df <- data.frame(Tavg_wind=dep.data$Tavg_wind,
+                          fit_pm25=lm.fit.df)
+
+# Plot relationship between wind and PM2.5 after transforming data
+# and add the linear model fit
+dep.data %>%
+  ggplot(aes(Tavg_wind,Tavg_pm25)) +
+  geom_point(size=0.25,alpha=0.5) +
+  geom_line(data=lm.model.df,
+            aes(x=Tavg_wind, y=fit_pm25),
+            size=0.5) +
+  theme_minimal() +
+  labs(x='Avg. wind (log-transformed)',
+       y='Avg. PM 2.5 (log-transformed)')
+```
+
+#### Segmented model fit:
+
+```{r}
+#| eval: true
+# Break point analysis
+seg.fit  <- segmented(lm.fit)
+
+# Extract fitted values from segment analysis
+seg.fit.df   <- fitted(seg.fit)
+
+# Create dataset with wind and fitted PM2.5 data
+seg.model.df <- data.frame(Tavg_wind=dep.data$Tavg_wind,
+                           fit_pm25=seg.fit.df)
+
+# Plot relationship between wind and PM2.5 after transforming data
+# and add the segmented model fit
+dep.data %>%
+  ggplot(aes(Tavg_wind,Tavg_pm25)) +
+  geom_point(size=0.25,alpha=0.5) +
+  geom_line(data=seg.model.df,
+            aes(x=Tavg_wind, y=fit_pm25),
+            size=0.5) +
+  theme_minimal() +
+  labs(x='Avg. wind (log-transformed)',
+       y='Avg. PM 2.5 (log-transformed)')
 ```
