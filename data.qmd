@@ -1,0 +1,121 @@
+---
+title: "Data"
+---
+
+```{=html}
+<style>
+  pre {
+    background-color: lightyellow;
+    white-space: pre-wrap;
+    line-height: 100%;
+  }
+</style>
+```
+
+### **Import PA DEP datasets:**
+
+-----
+
+```{r}
+#| include: false
+#| message: false
+# Install and load required packages
+pacman::p_load(segmented,tidyverse)
+
+# Download wind and PM2.5 data
+url1 <- 'https://www.dropbox.com/s/djsrnlou8gfd9h6/pa_dep_wind.csv?dl=1'
+url2 <- 'https://www.dropbox.com/s/f60llaltcclen47/pa_dep_pm25.csv?dl=1'
+
+wind <- read_csv(url1)
+pm25 <- read_csv(url2)
+```
+
+```{r}
+#| eval: false
+#| warning: false
+# Install and load required packages
+install.packages('pacman')
+pacman::p_load(segmented,tidyverse)
+
+# Download wind and PM2.5 data
+url1 <- 'https://www.dropbox.com/s/djsrnlou8gfd9h6/pa_dep_wind.csv?dl=1'
+url2 <- 'https://www.dropbox.com/s/f60llaltcclen47/pa_dep_pm25.csv?dl=1'
+
+wind <- read_csv(url1)
+pm25 <- read_csv(url2)
+```
+
+### **Explore data:**
+
+-----
+
+```{r}
+#| eval: false
+#| warning: false
+# View the wind dataset in a spreadsheet-style view
+View(wind)
+     
+# Check the structure of the wind dataset
+str(wind)
+
+# Quick summary of the wind dataset
+summary(wind)
+```
+
+```{r}
+#| eval: true
+#| warning: false
+# Subset data and create a date variable
+wind.avg <- wind %>%
+  select(Day,Avg,Month) %>%
+  mutate(Year=str_sub(Month,-4),
+         Month=str_sub(Month,1,nchar(Month)-5),
+         Date=as.Date(paste(Year,Month,Day,sep='-'))) %>%
+  arrange(Date) %>%
+  rename(avg_wind=Avg) %>%
+  select(Date,avg_wind)
+
+pm25.avg <- pm25 %>%
+  select(Day,Avg,Month) %>%
+  mutate(Year=str_sub(Month,-4),
+         Month=str_sub(Month,1,nchar(Month)-5),
+         Date=as.Date(paste(Year,Month,Day,sep='-'))) %>%
+  arrange(Date) %>%
+  rename(avg_pm25=Avg) %>% 
+  select(Date,avg_pm25)
+
+# Join wind and PM2.5 datasets together
+dep.data <- pm25.avg %>%
+  left_join(wind.avg, by='Date')
+
+# Quick summary of the joined dataset
+summary(dep.data)
+```
+
+```{r}
+#| eval: false
+#| warning: false
+# Inspect data for outliers
+boxplot(dep.data$avg_pm25)
+boxplot(dep.data$avg_wind)
+
+# Remove extreme outliers
+dep.data <- dep.data %>% 
+  drop_na() %>% 
+  filter(avg_wind < 30) %>%
+  filter(between(avg_pm25, 0, 50))
+  #filter(avg_pm25 <= 50 & avg_pm25 > 0)
+```
+
+```{r}
+#| include: false
+#| message: false
+# Remove extreme outliers
+dep.data <- dep.data %>% 
+  drop_na() %>% 
+  filter(avg_wind < 30) %>%
+  filter(between(avg_pm25, 0, 50))
+  #filter(avg_pm25 <= 50 & avg_pm25 > 0)
+```
+
+-----

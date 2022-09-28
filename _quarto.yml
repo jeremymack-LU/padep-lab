@@ -8,9 +8,11 @@ website:
     style: "docked"
     search: true
     contents:
-      - section: "Script"
+      - section: "Script sections"
         contents: 
           - index.qmd
+          - data.qmd
+          - visualizations.qmd
 
 format:
   html:
