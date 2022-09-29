@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>PA DEP Lab - Overview</title>
+<title>PA DEP Lab - Data Visualization</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,15 +58,6 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
-<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
-<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
-<link href="site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
-<script src="site_libs/leaflet-1.3.1/leaflet.js"></script>
-<link href="site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
-<script src="site_libs/proj4-2.6.2/proj4.min.js"></script>
-<script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
-<link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
-<script src="site_libs/leaflet-binding-2.0.4.1/leaflet.js"></script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -78,7 +69,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Overview</h1>
+      <h1 class="quarto-secondary-nav-title">Data Visualization</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -116,7 +107,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./slides2.html" class="sidebar-item-text sidebar-link">Data Visualization</a>
+  <a href="./slides2.html" class="sidebar-item-text sidebar-link active">Data Visualization</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -136,7 +127,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">Overview</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Overview</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -156,20 +147,14 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#script-summary" id="toc-script-summary" class="nav-link active" data-scroll-target="#script-summary"><strong>Script summary:</strong></a></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Overview</h1>
+<h1 class="title d-none d-lg-block">Data Visualization</h1>
 </div>
 
 
@@ -183,27 +168,9 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<style>
-  pre {
-    background-color: lightyellow;
-    white-space: pre-wrap;
-    line-height: 100%;
-  }
-</style>
-<section id="script-summary" class="level3">
-<h3 class="anchored" data-anchor-id="script-summary"><strong>Script summary:</strong></h3>
-<hr>
-<p>PM2.5 describes fine inhalable particles, with diameters that are generally 2.5 micrometers and smaller. The following script summarizes the relationship between wind speed and PM2.5. Data were collected by PA DEP at their Freemansburg site and <a href="https://www.ahs.dep.pa.gov/aq_apps/aadata/Reports/MonthlyParamDetail.aspx">can be accessed here</a>.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="htmlwidget-9c454b725fea042be01f" style="width:100%;height:464px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9c454b725fea042be01f">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"setView":[[40.628,-75.341],14,[]],"calls":[{"method":"addTiles","args":["https://tile.jawg.io/jawg-terrain/{z}/{x}/{y}{r}.png?access-token=bka2W5SwTAqWUfIAw12i6iTLOqNOi5nY7EPkdAgUlFOXyxuzOJI7TIQRQ3rYBnCa",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false}]},{"method":"addCircleMarkers","args":[40.628,-75.341,10,null,null,{"interactive":true,"className":"","stroke":true,"color":"black","weight":1,"opacity":0.5,"fill":true,"fillColor":"blue","fillOpacity":0.6},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[40.628,40.628],"lng":[-75.341,-75.341]}},"evals":[],"jsHooks":[]}</script>
-</div>
-</div>
-<hr>
+<iframe src="https://jeremymack-lu.github.io/rviz/#2" width="100%" height="100%" allow="fullscreen" frameborder="0"></iframe>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

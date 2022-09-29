@@ -1,0 +1,7 @@
+---
+title: "Shiny Apps"
+---
+
+```{=html}
+<iframe src="https://jeremymack-lu.github.io/shinyapps/#2" width="100%" height="100%" allow="fullscreen" frameborder="0"></iframe>
+```

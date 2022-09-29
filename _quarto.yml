@@ -8,12 +8,16 @@ website:
     style: "docked"
     search: true
     contents:
+      - section: "R slide decks"
+        contents: 
+          - slides.qmd
+          - slides2.qmd
+          - slides3.qmd
       - section: "Script sections"
         contents: 
           - index.qmd
           - data.qmd
           - visualizations.qmd
-
 format:
   html:
     theme: cosmo
