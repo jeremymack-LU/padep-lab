@@ -58,7 +58,7 @@
   {
     "objectID": "pa_data2.html",
     "href": "pa_data2.html",
-    "title": "Seasonality?",
+    "title": "Long-term trends?",
     "section": "",
     "text": "Import datasets:\n\n\n# Install and load required packages\ninstall.packages('pacman')\npacman::p_load(hydroTSM,segmented,dplyr,ggplot2,readr,stringr,tidyr)\n\n# Download wind and PM2.5 data\nurl1 <- 'https://www.dropbox.com/s/djsrnlou8gfd9h6/pa_dep_wind.csv?dl=1'\nurl2 <- 'https://www.dropbox.com/s/f60llaltcclen47/pa_dep_pm25.csv?dl=1'\nurl3 <- 'https://www.dropbox.com/s/r3y0gmkkib7fas7/pa_dep_temp.csv?dl=1'\n\nwind <- read_csv(url1)\npm25 <- read_csv(url2)\ntemp <- read_csv(url3)"
   }
