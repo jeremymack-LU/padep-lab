@@ -1,0 +1,54 @@
+---
+title: "PM2.5 Plot"
+---
+
+```{=html}
+<style>
+  pre {
+    background-color: lightyellow;
+    white-space: pre-wrap;
+    line-height: 100%;
+  }
+</style>
+```
+
+```{r}
+#| include: false
+#| message: false
+library(tidyverse)
+
+data <- iris %>% as_tibble()
+
+plots <- data %>%
+  group_nest(Species) %>% 
+  deframe() %>% 
+  map(., ~ {
+    ggplot(.x, aes(x = Sepal.Length, y = Sepal.Width)) + 
+      geom_point() +
+      theme_bw(
+        base_size = 18 # to increase the size of the plot elements
+      )
+  }) 
+
+```
+
+# Iris Plots 
+
+::: {.panel-tabset}
+```{r}
+#| results: asis
+#| fig-width: 14
+#| fig-height: 6
+
+iwalk(plots, ~ {
+  cat('## ', .y, '\n\n')
+  
+  print(.x)
+  
+  cat('\n\n')
+  
+})
+
+```
+
+:::

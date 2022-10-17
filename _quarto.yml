@@ -18,6 +18,10 @@ website:
           - index.qmd
           - data.qmd
           - visualizations.qmd
+      - section: "Lab 2"
+        contents:
+          - pa_data.qmd
+          - pa_data2.qmd
 format:
   html:
     theme: cosmo

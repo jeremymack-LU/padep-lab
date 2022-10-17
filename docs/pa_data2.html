@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>PA DEP Lab - PA DEP data</title>
+<title>PA DEP Lab - Seasonality?</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -132,7 +132,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">PA DEP data</h1>
+      <h1 class="quarto-secondary-nav-title">Seasonality?</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -195,7 +195,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data.html" class="sidebar-item-text sidebar-link active">PA DEP data</a>
+  <a href="./data.html" class="sidebar-item-text sidebar-link">PA DEP data</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -220,7 +220,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pa_data2.html" class="sidebar-item-text sidebar-link">Seasonality?</a>
+  <a href="./pa_data2.html" class="sidebar-item-text sidebar-link active">Seasonality?</a>
   </div>
 </li>
       </ul>
@@ -234,8 +234,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#import-pa-dep-datasets" id="toc-import-pa-dep-datasets" class="nav-link active" data-scroll-target="#import-pa-dep-datasets"><strong>Import PA DEP datasets:</strong></a></li>
-  <li><a href="#explore-data" id="toc-explore-data" class="nav-link" data-scroll-target="#explore-data"><strong>Explore data:</strong></a></li>
+  <li><a href="#questions" id="toc-questions" class="nav-link active" data-scroll-target="#questions"><strong>Questions:</strong></a></li>
+  <li><a href="#import-datasets" id="toc-import-datasets" class="nav-link" data-scroll-target="#import-datasets"><strong>Import datasets:</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -244,7 +244,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">PA DEP data</h1>
+<h1 class="title d-none d-lg-block">Seasonality?</h1>
 </div>
 
 
@@ -265,86 +265,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     line-height: 100%;
   }
 </style>
-<section id="import-pa-dep-datasets" class="level3">
-<h3 class="anchored" data-anchor-id="import-pa-dep-datasets"><strong>Import PA DEP datasets:</strong></h3>
+<section id="questions" class="level3">
+<h3 class="anchored" data-anchor-id="questions"><strong>Questions:</strong></h3>
+<hr>
+<ol type="1">
+<li><p>How does daily PM2.5 vary over time in the Lehigh Valley?</p></li>
+<li><p>How does daily PM2.5 vary by season? Does PM2.5 tend to be higher or lower in particular seasons.</p></li>
+<li><p>How does daily PM2.5 relate to significantly cold weather? For example, is there more PM2.5 on days when it is especially cold?</p></li>
+</ol>
+</section>
+<section id="import-datasets" class="level3">
+<h3 class="anchored" data-anchor-id="import-datasets"><strong>Import datasets:</strong></h3>
 <hr>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install and load required packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'pacman'</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(segmented,dplyr,ggplot2,readr,stringr,tidyr)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#pacman::p_load(segmented,tidyverse)</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Download wind and PM2.5 data</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>url1 <span class="ot">&lt;-</span> <span class="st">'https://www.dropbox.com/s/djsrnlou8gfd9h6/pa_dep_wind.csv?dl=1'</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>url2 <span class="ot">&lt;-</span> <span class="st">'https://www.dropbox.com/s/f60llaltcclen47/pa_dep_pm25.csv?dl=1'</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(hydroTSM,segmented,dplyr,ggplot2,readr,stringr,tidyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Download wind and PM2.5 data</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>url1 <span class="ot">&lt;-</span> <span class="st">'https://www.dropbox.com/s/djsrnlou8gfd9h6/pa_dep_wind.csv?dl=1'</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>url2 <span class="ot">&lt;-</span> <span class="st">'https://www.dropbox.com/s/f60llaltcclen47/pa_dep_pm25.csv?dl=1'</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>url3 <span class="ot">&lt;-</span> <span class="st">'https://www.dropbox.com/s/r3y0gmkkib7fas7/pa_dep_temp.csv?dl=1'</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>wind <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url1)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>pm25 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>pm25 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url2)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="explore-data" class="level3">
-<h3 class="anchored" data-anchor-id="explore-data"><strong>Explore data:</strong></h3>
-<hr>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View the wind dataset in a spreadsheet-style view</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(wind)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the structure of the wind dataset</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(wind)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Quick summary of the wind dataset</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(wind)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset data and create a date variable</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>wind.avg <span class="ot">&lt;-</span> wind <span class="sc">%&gt;%</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Day,Avg,Month) <span class="sc">%&gt;%</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year=</span><span class="fu">str_sub</span>(Month,<span class="sc">-</span><span class="dv">4</span>),</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">Month=</span><span class="fu">str_sub</span>(Month,<span class="dv">1</span>,<span class="fu">nchar</span>(Month)<span class="sc">-</span><span class="dv">5</span>),</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">Date=</span><span class="fu">as.Date</span>(<span class="fu">paste</span>(Year,Month,Day,<span class="at">sep=</span><span class="st">'-'</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Date) <span class="sc">%&gt;%</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">avg_wind=</span>Avg) <span class="sc">%&gt;%</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Date,avg_wind)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>pm25.avg <span class="ot">&lt;-</span> pm25 <span class="sc">%&gt;%</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Day,Avg,Month) <span class="sc">%&gt;%</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year=</span><span class="fu">str_sub</span>(Month,<span class="sc">-</span><span class="dv">4</span>),</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">Month=</span><span class="fu">str_sub</span>(Month,<span class="dv">1</span>,<span class="fu">nchar</span>(Month)<span class="sc">-</span><span class="dv">5</span>),</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">Date=</span><span class="fu">as.Date</span>(<span class="fu">paste</span>(Year,Month,Day,<span class="at">sep=</span><span class="st">'-'</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Date) <span class="sc">%&gt;%</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">avg_pm25=</span>Avg) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Date,avg_pm25)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Join wind and PM2.5 datasets together</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>dep.data <span class="ot">&lt;-</span> pm25.avg <span class="sc">%&gt;%</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(wind.avg, <span class="at">by=</span><span class="st">'Date'</span>)</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Quick summary of the joined dataset</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dep.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      Date               avg_pm25        avg_wind     
- Min.   :2012-08-03   Min.   : -1.6   Min.   : 0.000  
- 1st Qu.:2015-02-15   1st Qu.:  6.2   1st Qu.: 1.900  
- Median :2017-09-11   Median :  9.1   Median : 3.200  
- Mean   :2017-09-10   Mean   : 10.6   Mean   : 3.665  
- 3rd Qu.:2020-03-04   3rd Qu.: 13.2   3rd Qu.: 4.800  
- Max.   :2022-10-13   Max.   :166.6   Max.   :31.200  
-                      NA's   :4       NA's   :69      </code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect data for outliers</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(dep.data<span class="sc">$</span>avg_pm25)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(dep.data<span class="sc">$</span>avg_wind)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove extreme outliers</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>dep.data <span class="ot">&lt;-</span> dep.data <span class="sc">%&gt;%</span> </span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(avg_wind <span class="sc">&lt;</span> <span class="dv">30</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">between</span>(avg_pm25, <span class="dv">0</span>, <span class="dv">50</span>))</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#filter(avg_pm25 &lt;= 50 &amp; avg_pm25 &gt; 0)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<hr>
 
 
 </section>

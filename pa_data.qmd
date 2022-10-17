@@ -1,0 +1,59 @@
+---
+title: "PurpleAir data"
+---
+
+```{=html}
+<style>
+  pre {
+    background-color: lightyellow;
+    white-space: pre-wrap;
+    line-height: 100%;
+  }
+</style>
+```
+### **Questions:**
+
+------------------------------------------------------------------------
+
+1.  How do the three recently installed PurpleAir monitors at the Freemansburg monitoring sight (FB1, FB2, and FB3) vary with each other?
+
+2.  How do the PA monitors at the Freemansburg site (FB1, FB2, and/or FB3) vary with the PA DEP monitor?
+
+3.  How does the most accurate PurpleAir monitor at the Freemansburg site vary with the PurpleAir monitors at the other locations in Bethlehem; specifically, MineoSS, NorthBeth22 and HanTwp1 and HanTwp2?
+
+### **Import datasets:**
+
+------------------------------------------------------------------------
+
+```{r}
+#| eval: false
+#| warning: false
+# Install and load required packages
+install.packages('pacman')
+pacman::p_load(segmented,dplyr,ggplot2,readr,stringr,tidyr)
+#pacman::p_load(segmented,tidyverse)
+
+# Freemansburg PurpleAir Sensors
+fb1 <- 'https://www.dropbox.com/s/dut6d36p4d5dmc4/fb1_pm25.csv?dl=1'
+fb2 <- 'https://www.dropbox.com/s/gpk1bhfysva91yl/fb2_pm25.csv?dl=1'
+fb3 <- 'https://www.dropbox.com/s/4app080901fsxr8/fb3_pm25.csv?dl=1'
+
+fb1 <- read_csv(fb1)
+fb2 <- read_csv(fb2)
+fb3 <- read_csv(fb3)
+
+# PA DEP data
+dep <- 'https://www.dropbox.com/s/f60llaltcclen47/pa_dep_pm25.csv?dl=1'
+dep <- read_csv(dep)
+
+# Bethlehem PurpleAir Sensors
+mineo <- 'https://www.dropbox.com/s/zo31nf7i0ego63c/MineoSS_pm25.csv?dl=1'
+htwp1 <- 'https://www.dropbox.com/s/c9tzi72udlzeb2t/HanTwp1_pm25.csv?dl=1'
+htwp2 <- 'https://www.dropbox.com/s/fwk5yf9cagdnpvh/HanTwp2_pm25.csv?dl=1'
+nbeth <- 'https://www.dropbox.com/s/y5oa40yimsxghri/NorthBeth22_pm25.csv?dl=1'
+
+mineo <- read_csv(mineo)
+htwp1 <- read_csv(htwp1)
+htwp2 <- read_csv(htwp2)
+nbeth <- read_csv(nbeth)
+```
