@@ -7,13 +7,14 @@ website:
   sidebar:
     style: "docked"
     search: true
+    collapse-level: 1
     contents:
       - section: "R slide decks"
         contents: 
           - slides.qmd
           - slides2.qmd
           - slides3.qmd
-      - section: "Script sections"
+      - section: "Lab 1"
         contents: 
           - index.qmd
           - data.qmd
