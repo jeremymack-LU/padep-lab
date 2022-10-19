@@ -234,8 +234,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#questions" id="toc-questions" class="nav-link active" data-scroll-target="#questions"><strong>Questions:</strong></a></li>
-  <li><a href="#import-datasets" id="toc-import-datasets" class="nav-link" data-scroll-target="#import-datasets"><strong>Import datasets:</strong></a></li>
+  <li><a href="#questions" id="toc-questions" class="nav-link active" data-scroll-target="#questions"><strong>Questions</strong></a></li>
+  <li><a href="#pa-data" id="toc-pa-data" class="nav-link" data-scroll-target="#pa-data"><strong>PA Data</strong></a></li>
+  <li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1"><strong>Question 1</strong></a></li>
+  <li><a href="#dep-data" id="toc-dep-data" class="nav-link" data-scroll-target="#dep-data"><strong>DEP Data</strong></a></li>
+  <li><a href="#question-2" id="toc-question-2" class="nav-link" data-scroll-target="#question-2"><strong>Question 2</strong></a></li>
+  <li><a href="#more-pa-data" id="toc-more-pa-data" class="nav-link" data-scroll-target="#more-pa-data"><strong>More PA Data</strong></a></li>
+  <li><a href="#question-3" id="toc-question-3" class="nav-link" data-scroll-target="#question-3"><strong>Question 3</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -266,46 +271,178 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 </style>
 <section id="questions" class="level3">
-<h3 class="anchored" data-anchor-id="questions"><strong>Questions:</strong></h3>
+<h3 class="anchored" data-anchor-id="questions"><strong>Questions</strong></h3>
 <hr>
 <ol type="1">
-<li><p>How do the three recently installed PurpleAir monitors at the Freemansburg monitoring sight (FB1, FB2, and FB3) vary with each other?</p></li>
+<li><p>How do the three recently installed PurpleAir monitors at the Freemansburg monitoring site (FB1, FB2, and FB3) vary with each other?</p></li>
 <li><p>How do the PA monitors at the Freemansburg site (FB1, FB2, and/or FB3) vary with the PA DEP monitor?</p></li>
 <li><p>How does the most accurate PurpleAir monitor at the Freemansburg site vary with the PurpleAir monitors at the other locations in Bethlehem; specifically, MineoSS, NorthBeth22 and HanTwp1 and HanTwp2?</p></li>
 </ol>
 </section>
-<section id="import-datasets" class="level3">
-<h3 class="anchored" data-anchor-id="import-datasets"><strong>Import datasets:</strong></h3>
+<section id="pa-data" class="level3">
+<h3 class="anchored" data-anchor-id="pa-data"><strong>PA Data</strong></h3>
 <hr>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install and load required packages</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'pacman'</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(segmented,dplyr,ggplot2,readr,stringr,tidyr)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#pacman::p_load(segmented,tidyverse)</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Freemansburg PurpleAir Sensors</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>fb1 <span class="ot">&lt;-</span> <span class="st">'https://www.dropbox.com/s/dut6d36p4d5dmc4/fb1_pm25.csv?dl=1'</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>fb2 <span class="ot">&lt;-</span> <span class="st">'https://www.dropbox.com/s/gpk1bhfysva91yl/fb2_pm25.csv?dl=1'</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>fb3 <span class="ot">&lt;-</span> <span class="st">'https://www.dropbox.com/s/4app080901fsxr8/fb3_pm25.csv?dl=1'</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>fb1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(fb1)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>fb2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(fb2)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>fb3 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(fb3)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># PA DEP data</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>dep <span class="ot">&lt;-</span> <span class="st">'https://www.dropbox.com/s/f60llaltcclen47/pa_dep_pm25.csv?dl=1'</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>dep <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(dep)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages('pacman')</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(ggplot2,readr,stringr,tidyr,readr,dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Freemansburg PurpleAir Sensors</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>fb1 <span class="ot">&lt;-</span> <span class="st">'https://www.dropbox.com/s/dut6d36p4d5dmc4/fb1_pm25.csv?dl=1'</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>fb2 <span class="ot">&lt;-</span> <span class="st">'https://www.dropbox.com/s/gpk1bhfysva91yl/fb2_pm25.csv?dl=1'</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>fb3 <span class="ot">&lt;-</span> <span class="st">'https://www.dropbox.com/s/4app080901fsxr8/fb3_pm25.csv?dl=1'</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>fb1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(fb1)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>fb2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(fb2)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>fb3 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(fb3)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Add sensor variable and combine datasets</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>fb1 <span class="ot">&lt;-</span> fb1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">sensor=</span><span class="st">'fb1'</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>fb2 <span class="ot">&lt;-</span> fb2 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">sensor=</span><span class="st">'fb2'</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>fb3 <span class="ot">&lt;-</span> fb3 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">sensor=</span><span class="st">'fb3'</span>)</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Bethlehem PurpleAir Sensors</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>mineo <span class="ot">&lt;-</span> <span class="st">'https://www.dropbox.com/s/zo31nf7i0ego63c/MineoSS_pm25.csv?dl=1'</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>htwp1 <span class="ot">&lt;-</span> <span class="st">'https://www.dropbox.com/s/c9tzi72udlzeb2t/HanTwp1_pm25.csv?dl=1'</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>htwp2 <span class="ot">&lt;-</span> <span class="st">'https://www.dropbox.com/s/fwk5yf9cagdnpvh/HanTwp2_pm25.csv?dl=1'</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>nbeth <span class="ot">&lt;-</span> <span class="st">'https://www.dropbox.com/s/y5oa40yimsxghri/NorthBeth22_pm25.csv?dl=1'</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>mineo <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(mineo)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>htwp1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(htwp1)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>htwp2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(htwp2)</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>nbeth <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(nbeth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>fb.df <span class="ot">&lt;-</span> fb1 <span class="sc">%&gt;%</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(fb2) <span class="sc">%&gt;%</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(fb3)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Hourly averaged data</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>fb.df <span class="ot">&lt;-</span> fb.df <span class="sc">%&gt;%</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the average of two sensors</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pm25=</span>(pm25_atm_a<span class="sc">+</span>pm25_atm_b)<span class="sc">/</span><span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Drop minutes from timestamp</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">created_at=</span><span class="fu">as.POSIXct</span>(<span class="fu">paste</span>(created_at),<span class="at">format=</span><span class="st">"%Y-%m-%d %H"</span>,<span class="at">tz=</span><span class="st">"UTC"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sensor,created_at) <span class="sc">%&gt;%</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Average pm25 by hour each day</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">pm25=</span><span class="fu">mean</span>(pm25,<span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="question-1" class="level3">
+<h3 class="anchored" data-anchor-id="question-1"><strong>Question 1</strong></h3>
+<hr>
+<ol type="1">
+<li>How do the three recently installed PurpleAir monitors at the Freemansburg monitoring site (FB1, FB2, and FB3) vary with each other?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>fb.df) <span class="sc">+</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>created_at, <span class="at">y=</span>pm25, <span class="at">color=</span>sensor))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="pa_data_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="dep-data" class="level3">
+<h3 class="anchored" data-anchor-id="dep-data"><strong>DEP Data</strong></h3>
+<hr>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Freemansburg PA DEP sensor</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dep <span class="ot">&lt;-</span> <span class="st">'https://www.dropbox.com/s/f60llaltcclen47/pa_dep_pm25.csv?dl=1'</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>dep <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(dep)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop unused columns and create date variable</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>dep <span class="ot">&lt;-</span> dep <span class="sc">%&gt;%</span> </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Avg,<span class="sc">-</span>Min,<span class="sc">-</span>Max,<span class="sc">-</span>Count) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(Month) <span class="sc">%&gt;%</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year=</span><span class="fu">str_sub</span>(Month,<span class="sc">-</span><span class="dv">4</span>),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">Month=</span><span class="fu">str_sub</span>(Month,<span class="dv">1</span>,<span class="fu">nchar</span>(Month)<span class="sc">-</span><span class="dv">5</span>),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">Date=</span><span class="fu">as.Date</span>(<span class="fu">paste</span>(Year,Month,Day,<span class="at">sep=</span><span class="st">'-'</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(Date) <span class="sc">%&gt;%</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(Year, <span class="at">.after=</span>Day)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Pivot from wide to long format and create timestamp</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>dep <span class="ot">&lt;-</span> dep <span class="sc">%&gt;%</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="dv">5</span><span class="sc">:</span><span class="dv">28</span>,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to=</span><span class="st">'Hour'</span>,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to=</span><span class="st">'pm25'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">created_at=</span><span class="fu">as.POSIXct</span>(<span class="fu">paste</span>(Date,Hour),<span class="at">format=</span><span class="st">"%Y-%m-%d %H"</span>,<span class="at">tz=</span><span class="st">"EST"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sensor=</span><span class="st">'dep'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sensor,created_at,pm25)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter DEP dataset to FB data size</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>first <span class="ot">&lt;-</span> fb.df[<span class="dv">1</span>,<span class="dv">2</span>]</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>last  <span class="ot">&lt;-</span> fb.df[<span class="fu">nrow</span>(fb.df),<span class="dv">2</span>]</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>dep.sub <span class="ot">&lt;-</span> dep <span class="sc">%&gt;%</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">between</span>(created_at,first,last))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="question-2" class="level3">
+<h3 class="anchored" data-anchor-id="question-2"><strong>Question 2</strong></h3>
+<hr>
+<ol start="2" type="1">
+<li>How do the PA monitors at the Freemansburg site (FB1, FB2, and/or FB3) vary with the PA DEP monitor?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fb.df <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_rows</span>(dep.sub) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>created_at, <span class="at">y=</span>pm25, <span class="at">color=</span>sensor, <span class="at">size=</span>sensor),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">show.legend=</span><span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="st">"dep"</span>,<span class="st">"fb1"</span>,<span class="st">"fb2"</span>,<span class="st">"fb3"</span>),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">values=</span><span class="fu">c</span>(<span class="st">"black"</span>,<span class="st">"blue"</span>,<span class="st">"purple"</span>,<span class="st">"brown"</span>)) <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_size_manual</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="st">"dep"</span>,<span class="st">"fb1"</span>,<span class="st">"fb2"</span>,<span class="st">"fb3"</span>), </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">0.25</span>,<span class="fl">0.25</span>,<span class="fl">0.25</span>)) <span class="sc">+</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="pa_data_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="more-pa-data" class="level3">
+<h3 class="anchored" data-anchor-id="more-pa-data"><strong>More PA Data</strong></h3>
+<hr>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bethlehem PurpleAir Sensors</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>mineo <span class="ot">&lt;-</span> <span class="st">'https://www.dropbox.com/s/zo31nf7i0ego63c/MineoSS_pm25.csv?dl=1'</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>htwp1 <span class="ot">&lt;-</span> <span class="st">'https://www.dropbox.com/s/c9tzi72udlzeb2t/HanTwp1_pm25.csv?dl=1'</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>htwp2 <span class="ot">&lt;-</span> <span class="st">'https://www.dropbox.com/s/fwk5yf9cagdnpvh/HanTwp2_pm25.csv?dl=1'</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>nbeth <span class="ot">&lt;-</span> <span class="st">'https://www.dropbox.com/s/y5oa40yimsxghri/NorthBeth22_pm25.csv?dl=1'</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>mineo <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(mineo)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>htwp1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(htwp1)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>htwp2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(htwp2)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>nbeth <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(nbeth)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Add sensor variable and combine datasets</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>mineo <span class="ot">&lt;-</span> mineo <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">sensor=</span><span class="st">'mineo'</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>htwp1 <span class="ot">&lt;-</span> htwp1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">sensor=</span><span class="st">'htwp1'</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>htwp2 <span class="ot">&lt;-</span> htwp2 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">sensor=</span><span class="st">'htwp2'</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>nbeth <span class="ot">&lt;-</span> nbeth <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">sensor=</span><span class="st">'nbeth'</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>pa.df <span class="ot">&lt;-</span> mineo <span class="sc">%&gt;%</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(htwp1) <span class="sc">%&gt;%</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(htwp2) <span class="sc">%&gt;%</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(nbeth)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>pa.df <span class="ot">&lt;-</span> pa.df <span class="sc">%&gt;%</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the average of two sensors</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pm25=</span>(pm25_atm_a<span class="sc">+</span>pm25_atm_b)<span class="sc">/</span><span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Drop minutes from timestamp</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">created_at=</span><span class="fu">as.POSIXct</span>(<span class="fu">paste</span>(created_at),<span class="at">format=</span><span class="st">"%Y-%m-%d %H"</span>,<span class="at">tz=</span><span class="st">"UTC"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sensor,created_at) <span class="sc">%&gt;%</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Average pm25 by hour each day</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">pm25=</span><span class="fu">mean</span>(pm25,<span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">between</span>(created_at,first,last))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="question-3" class="level3">
+<h3 class="anchored" data-anchor-id="question-3"><strong>Question 3</strong></h3>
+<hr>
+<ol start="3" type="1">
+<li>How does the most accurate PurpleAir monitor at the Freemansburg site vary with the PurpleAir monitors at the other locations in Bethlehem; specifically, MineoSS, NorthBeth22 and HanTwp1 and HanTwp2?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fb.df <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sensor<span class="sc">==</span><span class="st">'fb1'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(pa.df) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>created_at, <span class="at">y=</span>pm25, <span class="at">color=</span>sensor, <span class="at">size=</span>sensor), <span class="at">show.legend=</span><span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="st">"fb1"</span>,<span class="st">"mineo"</span>,<span class="st">"htwp1"</span>,<span class="st">"htwp2"</span>,<span class="st">"nbeth"</span>),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">values=</span><span class="fu">c</span>(<span class="st">"black"</span>,<span class="st">"blue"</span>,<span class="st">"purple"</span>,<span class="st">"brown"</span>,<span class="st">"orange"</span>)) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_manual</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="st">"fb1"</span>,<span class="st">"mineo"</span>,<span class="st">"htwp1"</span>,<span class="st">"htwp2"</span>,<span class="st">"nbeth"</span>),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">values=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">0.25</span>,<span class="fl">0.25</span>,<span class="fl">0.25</span>,<span class="fl">0.25</span>)) <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="pa_data_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
 </div>
 
 

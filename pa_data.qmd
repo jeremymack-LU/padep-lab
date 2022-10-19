@@ -11,27 +11,26 @@ title: "PurpleAir data"
   }
 </style>
 ```
-### **Questions:**
+### **Questions**
 
 ------------------------------------------------------------------------
 
-1.  How do the three recently installed PurpleAir monitors at the Freemansburg monitoring sight (FB1, FB2, and FB3) vary with each other?
+1.  How do the three recently installed PurpleAir monitors at the Freemansburg monitoring site (FB1, FB2, and FB3) vary with each other?
 
 2.  How do the PA monitors at the Freemansburg site (FB1, FB2, and/or FB3) vary with the PA DEP monitor?
 
 3.  How does the most accurate PurpleAir monitor at the Freemansburg site vary with the PurpleAir monitors at the other locations in Bethlehem; specifically, MineoSS, NorthBeth22 and HanTwp1 and HanTwp2?
 
-### **Import datasets:**
+### **PA Data**
 
 ------------------------------------------------------------------------
 
 ```{r}
-#| eval: false
+#| eval: true
 #| warning: false
 # Install and load required packages
-install.packages('pacman')
-pacman::p_load(segmented,dplyr,ggplot2,readr,stringr,tidyr)
-#pacman::p_load(segmented,tidyverse)
+#install.packages('pacman')
+pacman::p_load(ggplot2,readr,stringr,tidyr,readr,dplyr)
 
 # Freemansburg PurpleAir Sensors
 fb1 <- 'https://www.dropbox.com/s/dut6d36p4d5dmc4/fb1_pm25.csv?dl=1'
@@ -42,10 +41,107 @@ fb1 <- read_csv(fb1)
 fb2 <- read_csv(fb2)
 fb3 <- read_csv(fb3)
 
-# PA DEP data
+# Add sensor variable and combine datasets
+fb1 <- fb1 %>% mutate(sensor='fb1')
+fb2 <- fb2 %>% mutate(sensor='fb2')
+fb3 <- fb3 %>% mutate(sensor='fb3')
+
+fb.df <- fb1 %>%
+  bind_rows(fb2) %>%
+  bind_rows(fb3)
+
+# Hourly averaged data
+fb.df <- fb.df %>%
+  # Calculate the average of two sensors
+  mutate(pm25=(pm25_atm_a+pm25_atm_b)/2) %>%
+  # Drop minutes from timestamp
+  mutate(created_at=as.POSIXct(paste(created_at),format="%Y-%m-%d %H",tz="UTC")) %>% 
+  group_by(sensor,created_at) %>%
+  # Average pm25 by hour each day
+  summarize(pm25=mean(pm25,na.rm=TRUE))
+```
+
+### **Question 1**
+
+------------------------------------------------------------------------
+
+1.  How do the three recently installed PurpleAir monitors at the Freemansburg monitoring site (FB1, FB2, and FB3) vary with each other?
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+ggplot(data=fb.df) +
+  geom_line(aes(x=created_at, y=pm25, color=sensor))
+```
+
+### **DEP Data**
+
+------------------------------------------------------------------------
+
+```{r}
+#| eval: true
+#| warning: false
+# Freemansburg PA DEP sensor
 dep <- 'https://www.dropbox.com/s/f60llaltcclen47/pa_dep_pm25.csv?dl=1'
 dep <- read_csv(dep)
 
+# Drop unused columns and create date variable
+dep <- dep %>% 
+  select(-Avg,-Min,-Max,-Count) %>% 
+  relocate(Month) %>%
+  mutate(Year=str_sub(Month,-4),
+         Month=str_sub(Month,1,nchar(Month)-5),
+         Date=as.Date(paste(Year,Month,Day,sep='-'))) %>%
+  relocate(Date) %>%
+  relocate(Year, .after=Day)
+
+# Pivot from wide to long format and create timestamp
+dep <- dep %>%
+  pivot_longer(cols=5:28,
+               names_to='Hour',
+               values_to='pm25') %>%
+  mutate(created_at=as.POSIXct(paste(Date,Hour),format="%Y-%m-%d %H",tz="EST")) %>%
+  mutate(sensor='dep') %>% 
+  select(sensor,created_at,pm25)
+
+# Filter DEP dataset to FB data size
+first <- fb.df[1,2]
+last  <- fb.df[nrow(fb.df),2]
+dep.sub <- dep %>%
+  filter(between(created_at,first,last))
+```
+
+### **Question 2**
+
+------------------------------------------------------------------------
+
+2.  How do the PA monitors at the Freemansburg site (FB1, FB2, and/or FB3) vary with the PA DEP monitor?
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+fb.df %>%
+    bind_rows(dep.sub) %>%
+    ggplot() +
+    geom_line(aes(x=created_at, y=pm25, color=sensor, size=sensor),
+              show.legend=TRUE) +
+    scale_color_manual(breaks=c("dep","fb1","fb2","fb3"),
+                       values=c("black","blue","purple","brown")) +
+    scale_size_manual(breaks=c("dep","fb1","fb2","fb3"), 
+                      values=c(1,0.25,0.25,0.25)) +
+    theme_minimal()
+
+```
+
+### **More PA Data**
+
+------------------------------------------------------------------------
+
+```{r}
+#| eval: true
+#| warning: false
 # Bethlehem PurpleAir Sensors
 mineo <- 'https://www.dropbox.com/s/zo31nf7i0ego63c/MineoSS_pm25.csv?dl=1'
 htwp1 <- 'https://www.dropbox.com/s/c9tzi72udlzeb2t/HanTwp1_pm25.csv?dl=1'
@@ -56,4 +152,48 @@ mineo <- read_csv(mineo)
 htwp1 <- read_csv(htwp1)
 htwp2 <- read_csv(htwp2)
 nbeth <- read_csv(nbeth)
+
+# Add sensor variable and combine datasets
+mineo <- mineo %>% mutate(sensor='mineo')
+htwp1 <- htwp1 %>% mutate(sensor='htwp1')
+htwp2 <- htwp2 %>% mutate(sensor='htwp2')
+nbeth <- nbeth %>% mutate(sensor='nbeth')
+
+pa.df <- mineo %>%
+  bind_rows(htwp1) %>%
+  bind_rows(htwp2) %>%
+  bind_rows(nbeth)
+
+pa.df <- pa.df %>%
+  # Calculate the average of two sensors
+  mutate(pm25=(pm25_atm_a+pm25_atm_b)/2) %>%
+  # Drop minutes from timestamp
+  mutate(created_at=as.POSIXct(paste(created_at),format="%Y-%m-%d %H",tz="UTC")) %>% 
+  group_by(sensor,created_at) %>%
+  # Average pm25 by hour each day
+  summarize(pm25=mean(pm25,na.rm=TRUE)) %>%
+  filter(between(created_at,first,last))
+```
+
+### **Question 3**
+
+------------------------------------------------------------------------
+
+3.  How does the most accurate PurpleAir monitor at the Freemansburg site vary with the PurpleAir monitors at the other locations in Bethlehem; specifically, MineoSS, NorthBeth22 and HanTwp1 and HanTwp2?
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+fb.df %>%
+  filter(sensor=='fb1') %>%
+  bind_rows(pa.df) %>%
+  ggplot() +
+  geom_line(aes(x=created_at, y=pm25, color=sensor, size=sensor), show.legend=TRUE) +
+  scale_color_manual(breaks=c("fb1","mineo","htwp1","htwp2","nbeth"),
+                     values=c("black","blue","purple","brown","orange")) +
+  scale_size_manual(breaks=c("fb1","mineo","htwp1","htwp2","nbeth"),
+                    values=c(1,0.25,0.25,0.25,0.25)) +
+  theme_minimal()
+
 ```
